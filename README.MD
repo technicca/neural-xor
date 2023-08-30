@@ -13,6 +13,6 @@ pip install numpy
 python python_xor.py
 ```
 ### TODO:
-[] Add rust version
-[x] Add C version
-[] Add javascript/typescript versions
+- [ ] Add rust version
+- [ ] Add javascript/typescript versions
+- [x] Add C version
