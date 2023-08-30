@@ -12,3 +12,7 @@ g++ cpp_xor.cpp -o cpp_xor
 pip install numpy
 python python_xor.py
 ```
+### TODO:
+- Add rust version
+- Add C version
+- Add javascript/typescript versions
