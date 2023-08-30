@@ -84,7 +84,7 @@ int main() {
     // Initialize random number generator
     srand(time(NULL));
 
-    // Initialize weights and biases to random values
+    // Initialize weights and biases to random value
     for (int i = 0; i < HIDDEN_NEURONS; i++) {
         for (int j = 0; j < INPUT_NEURONS; j++) {
             network.hidden[i].weights[j] = (double)rand() / RAND_MAX;
