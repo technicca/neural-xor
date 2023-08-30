@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #define INPUT_NEURONS 2
-#define HIDDEN_NEURONS 19
+#define HIDDEN_NEURONS 8
 #define OUTPUT_NEURONS 1
-#define LEARNING_RATE 0.8
+#define LEARNING_RATE 0.1
 #define EPOCHS 20000
 
 // Define the structure of a neuron
@@ -17,7 +18,7 @@ typedef struct {
 // Define the structure of a network
 typedef struct {
     Neuron hidden[HIDDEN_NEURONS];
-    Neuron output;
+    Neuron output[HIDDEN_NEURONS];
 } Network;
 
 // Define the sigmoid function
@@ -36,7 +37,7 @@ double feedforward(Network* network, double inputs[INPUT_NEURONS]) {
     for (int i = 0; i < HIDDEN_NEURONS; i++) {
         hidden_outputs[i] = sigmoid(network->hidden[i].weights[0] * inputs[0] + network->hidden[i].weights[1] * inputs[1] + network->hidden[i].bias);
     }
-    return sigmoid(network->output.weights[0] * hidden_outputs[0] + network->output.weights[1] * hidden_outputs[1] + network->output.bias);
+    return sigmoid(network->output[0].weights[0] * hidden_outputs[0] + network->output[0].weights[1] * hidden_outputs[1] + network->output[0].bias);
 }
 
 // Define the train function
@@ -46,7 +47,7 @@ void train(Network* network, double inputs[INPUT_NEURONS], double target) {
     for (int i = 0; i < HIDDEN_NEURONS; i++) {
         hidden_outputs[i] = sigmoid(network->hidden[i].weights[0] * inputs[0] + network->hidden[i].weights[1] * inputs[1] + network->hidden[i].bias);
     }
-    double output = sigmoid(network->output.weights[0] * hidden_outputs[0] + network->output.weights[1] * hidden_outputs[1] + network->output.bias);
+    double output = sigmoid(network->output[0].weights[0] * hidden_outputs[0] + network->output[0].weights[1] * hidden_outputs[1] + network->output[0].bias);
 
     // Calculate output error
     double output_error = target - output;
@@ -56,14 +57,14 @@ void train(Network* network, double inputs[INPUT_NEURONS], double target) {
 
     // Adjust output weights and bias
     for (int i = 0; i < HIDDEN_NEURONS; i++) {
-        network->output.weights[i] += output_gradient * hidden_outputs[i] * LEARNING_RATE;
+        network->output[0].weights[i] += output_gradient * hidden_outputs[i] * LEARNING_RATE;
     }
-    network->output.bias += output_gradient * LEARNING_RATE;
+    network->output[0].bias += output_gradient * LEARNING_RATE;
 
     // Calculate hidden errors
     double hidden_errors[HIDDEN_NEURONS];
     for (int i = 0; i < HIDDEN_NEURONS; i++) {
-        hidden_errors[i] = network->output.weights[i] * output_error;
+        hidden_errors[i] = network->output[0].weights[i] * output_error;
     }
 
     // Calculate hidden gradients and adjust hidden weights and biases
@@ -79,6 +80,19 @@ void train(Network* network, double inputs[INPUT_NEURONS], double target) {
 int main() {
     // Initialize network
     Network network = {0};
+
+    // Initialize random number generator
+    srand(time(NULL));
+
+    // Initialize weights and biases to random values
+    for (int i = 0; i < HIDDEN_NEURONS; i++) {
+        for (int j = 0; j < INPUT_NEURONS; j++) {
+            network.hidden[i].weights[j] = (double)rand() / RAND_MAX;
+        }
+        network.hidden[i].bias = (double)rand() / RAND_MAX;
+        network.output[0].weights[i] = (double)rand() / RAND_MAX;
+    }
+    network.output[0].bias = (double)rand() / RAND_MAX;
 
     // Define training data
     double inputs[4][INPUT_NEURONS] = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
@@ -100,8 +114,8 @@ int main() {
     for (int i = 0; i < HIDDEN_NEURONS; i++) {
         printf("Neuron %d: %f\n", i, network.hidden[i].bias);
     }
-    printf("Final output weights: %f, %f\n", network.output.weights[0], network.output.weights[1]);
-    printf("Final output bias: %f\n", network.output.bias);
+    printf("Final output weights: %f, %f\n", network.output[0].weights[0], network.output[0].weights[1]);
+    printf("Final output bias: %f\n", network.output[0].bias);
 
     // Test network
     printf("\nOutput from neural network after %d epochs:\n", EPOCHS);
