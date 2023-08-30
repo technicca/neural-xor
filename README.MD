@@ -1,4 +1,4 @@
-*** Sample implementations of neural networks that solve the XOR problem from scratch (math libraries only) ***
+*Sample implementations of neural networks that solve the XOR problem from scratch (math libraries only)*
 
 ### Compile and run the C++ version:
 
@@ -14,6 +14,7 @@ python python_xor.py
 ### C version:
 ```
 g++ c_xor.c -o ./c_xor
+./c_xor
 ```
 
 ### TODO:
