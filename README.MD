@@ -14,5 +14,5 @@ python python_xor.py
 ```
 ### TODO:
 - Add rust version
-- Add C version
+[-] Add C version
 - Add javascript/typescript versions
