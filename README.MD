@@ -27,6 +27,6 @@ cargo run --bin tahn
 ```
 
 ### TODO:
-- [-] Add rust version
+- [x] Add rust version
 - [ ] Add javascript/typescript versions
 - [ ] Add C version
