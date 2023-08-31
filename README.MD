@@ -16,8 +16,17 @@ python python_xor.py
 g++ c_xor.c -o ./c_xor
 ./c_xor
 ```
+### Rust version:
+```
+cd rust_xor
+cargo run --bin rust_xor
+```
+or for the Tahn function implementation:
+```
+cargo run --bin tahn
+```
 
 ### TODO:
-- [ ] Add rust version
+- [-] Add rust version
 - [ ] Add javascript/typescript versions
 - [ ] Add C version
